@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# output files
+code/None/
+code/plots/*.png
+code/plots/*.pdf
+code/plots/*.pkl
+
+nohup.out
+MNFIT_PKMJD.LOG
+results/
