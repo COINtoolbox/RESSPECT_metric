@@ -1,4 +1,4 @@
-# <img align="right" src="docs/images/logo.png" width="350"> 
+# <img align="right" src="https://github.com/COINtoolbox/RESSPECT/blob/master/docs/images/logo_small.png" width="350"> 
 
 ## Are classification metrics good proxies for SN Ia cosmological constraining power?
 
