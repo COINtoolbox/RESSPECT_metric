@@ -20,7 +20,6 @@ def create_directories(dir_output: str):
     
     dirname_list = [dir_output ,
                 dir_output + 'fitres/',
-                dir_output + 'KLD/',
                 dir_output + 'M0DIF/',
                 dir_output + 'posteriors/',
                 dir_output + 'posteriors/trace/',
@@ -30,7 +29,6 @@ def create_directories(dir_output: str):
                 dir_output + 'COV/',
                 dir_output + 'stan_input/',
                 dir_output + 'stan_summary/',
-                dir_output + 'Wasserstein/',
                 dir_output + 'SALT2mu_input/']
 
 
@@ -328,7 +326,7 @@ om_pri = [0.3, 0.1]                          # gaussian prior on om => [mean, st
 w_pri = [-11, 9]                              # flat prior on w
 lowz = True                                   # choose to add lowz sample
 field = 'WFD'                                   # choose field
-#v = '1'                                       # realization or version
+v = '0'                                       # realization or version
 biascorr = True
 screen = True
 
@@ -336,7 +334,7 @@ save_full_fitres = True
 plot_chains = True
 
 # path to input (auxiliary files) and output directories
-output_root = '/media/RESSPECT/data/PLAsTiCC/for_metrics/final_data3/' + field + '/results/'
+output_root = '/media/RESSPECT/data/PLAsTiCC/for_metrics/final_data4/' + field + '/results/'
 
 dir_input = '../utils/'
 
@@ -358,10 +356,10 @@ fname_fitres_lowz = dir_input + 'lowz_only_fittres.fitres'
 #done = ['random3000.csv', 'fiducial3000.csv', '99SNIa1SNIax.csv', 
 #        '98SNIa2SNIax.csv', '95SNIa5SNIax.csv', '90SNIa10SNIax.csv',  '99.9SNIa0.1SNIax.csv']
 
-done = ['random3000.csv', '75SNIa25SNII.csv', '90SNIa10SNII.csv', '95SNIa5SNII.csv', '98SNIa2SNII.csv', '99SNIa1SNII.csv']
+done = ['random3000.csv', 'fiducial3000.csv', 'perfect3000.csv']
 
 
-for version in range(10, 20):
+for version in range(10):
     
     for nobjs in ['3000']:
         
@@ -419,8 +417,8 @@ for version in range(10, 20):
                 # run wfit
                 os.system('wfit.exe test_salt2mu_lowz_withbias_' + sample + '.M0DIF -ompri ' + \
                   str(om_pri[0]) + ' -dompri ' + str(om_pri[1]) + \
-                  ' -hmin 70 -hmax 70 -hsteps 1 -wmin '+ str(w_pri[0]) +' -wmax ' + str(w_pri[1]) + ' -ommin ' + \
-                  str(om_pri[0] - om_pri[1]) + ' -ommax ' + str(om_pri[0] + om_pri[1]))
+                  ' -hmin 70 -hmax 70 -hsteps 1 -wmin '+ str(w_pri[0]) +' -wmax ' + str(w_pri[1]) + \
+                  ' -ommin 0 -ommax 1'
 
                 # go back to working directory
                 os.chdir(dir_work)

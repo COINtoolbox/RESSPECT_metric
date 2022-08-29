@@ -50,7 +50,7 @@ transformed data {
       int x_i[0]; 
 }
 parameters{
-      real<lower=ompri - dompri, upper=ompri + dompri> om;    // dark matter energy density
+      real<lower=0, upper=1> om;    // dark matter energy density
       real<lower=wmin, upper=wmax> w;                         // dark energy equation of state parameter
 }
 transformed parameters{
