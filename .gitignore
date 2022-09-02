@@ -133,7 +133,9 @@ code/None/
 code/plots/*.png
 code/plots/*.pdf
 code/plots/*.pkl
+code/plots/metric_vs_metric-Copy1.ipynb
 
 nohup.out
 MNFIT_PKMJD.LOG
 results/
+other_runs/
