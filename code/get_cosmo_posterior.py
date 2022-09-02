@@ -325,7 +325,7 @@ nbins = 30                                    # number of bins for SALT2mu
 om_pri = [0.3, 0.1]                          # gaussian prior on om => [mean, std]
 w_pri = [-11, 9]                              # flat prior on w
 lowz = True                                   # choose to add lowz sample
-field = 'WFD'                                   # choose field
+field = 'DDF'                                   # choose field
 v = '0'                                       # realization or version
 biascorr = True
 screen = True
@@ -334,7 +334,7 @@ save_full_fitres = True
 plot_chains = True
 
 # path to input (auxiliary files) and output directories
-output_root = '/media/RESSPECT/data/PLAsTiCC/for_metrics/final_data4/' + field + '/results/'
+output_root = '/media/RESSPECT/data/PLAsTiCC/for_metrics/final_data3/' + field + '/results/'
 
 dir_input = '../utils/'
 
@@ -418,7 +418,7 @@ for version in range(10):
                 os.system('wfit.exe test_salt2mu_lowz_withbias_' + sample + '.M0DIF -ompri ' + \
                   str(om_pri[0]) + ' -dompri ' + str(om_pri[1]) + \
                   ' -hmin 70 -hmax 70 -hsteps 1 -wmin '+ str(w_pri[0]) +' -wmax ' + str(w_pri[1]) + \
-                  ' -ommin 0 -ommax 1'
+                  ' -ommin 0 -ommax 1')
 
                 # go back to working directory
                 os.chdir(dir_work)
