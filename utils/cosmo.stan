@@ -50,8 +50,9 @@ transformed data {
       int x_i[0]; 
 }
 parameters{
-      real<lower=0, upper=1> om;    // dark matter energy density
-      real<lower=wmin, upper=wmax> w;                         // dark energy equation of state parameter
+      real<lower=0, upper=1> om;       // dark matter energy density
+      real<lower=wmin, upper=wmax> w;  // dark energy equation of state parameter
+      real M;
 }
 transformed parameters{
       real DC[nobs,1];                        // co-moving distance 
@@ -74,6 +75,7 @@ model{
      // priors
      om ~ normal(ompri, dompri);
      w ~ uniform(wmin, wmax);
+     M ~ normal(0, 150);
   
      // likelihhod
      mu ~ normal(dl, muerr);
