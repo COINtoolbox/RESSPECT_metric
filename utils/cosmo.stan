@@ -75,7 +75,7 @@ model{
      // priors
      om ~ normal(ompri, dompri);
      w ~ uniform(wmin, wmax);
-     M ~ normal(0, 150);
+     M ~ normal(0, 50);
   
      // likelihhod
      mu ~ normal(dl, muerr);
