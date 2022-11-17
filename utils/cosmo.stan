@@ -68,7 +68,7 @@ transformed parameters{
       // Integral of 1/E(z) 
       DC = integrate_ode_rk45(Ez, E0, z0, z, pars,  x_r, x_i);
       for (i in 1:nobs) {
-            dl[i] = 25 + 5 * log10(DH * (1 + z[i]) * DC[i, 1]);
+            dl[i] = M + 5 * log10(DH * (1 + z[i]) * DC[i, 1]);
       }
 }
 model{
