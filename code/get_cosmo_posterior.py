@@ -197,7 +197,7 @@ def remove_duplicated_z(fitres_final: pd.DataFrame):
 
 def fit_stan(fname_fitres_comb: str, dir_output: str, sample: str,
              screen=False, lowz=True, bias=True, plot=False, om_pri=[0.3, 0.01],
-             w_pri=[-11, 9]):
+             w_pri=[-11, 9], warmup=10000, n_iter=12000):
     """
     Fit Stan model for w.
     
@@ -221,6 +221,10 @@ def fit_stan(fname_fitres_comb: str, dir_output: str, sample: str,
         Mean and std of om Gaussian prior. Default is [0.3, 0.01].
     w_pri: list (optional)
         Minimum and maximum of flat prior on w. Default is [-11, 9].
+    warmup: int (optional)
+        Number of interations in warmup from pystan. Default is 10000.
+    n_iter: int (optional)
+        Total number of interations from pystan. Default is 12000.
     """
 
     # read data for Bayesian model
@@ -267,8 +271,8 @@ def fit_stan(fname_fitres_comb: str, dir_output: str, sample: str,
 
     # fit Bayesian model
     model = pystan.StanModel(file = dir_input + '/cosmo.stan')
-    fit = model.sampling(data=stan_input, iter=12000, chains=5, 
-                         warmup=10000, control={'adapt_delta':0.99})
+    fit = model.sampling(data=stan_input, iter=n_iter, chains=5, 
+                         warmup=warmup, control={'adapt_delta':0.99})
 
     # get summary
     res = fit.stansummary(pars=["om", "w"])
@@ -322,13 +326,14 @@ def fit_stan(fname_fitres_comb: str, dir_output: str, sample: str,
 #sample = 'perfect3000'                        # choose sample case
 #nobjs = '3000'
 nbins = 30                                    # number of bins for SALT2mu
-om_pri = [0.3, 0.1]                          # gaussian prior on om => [mean, std]
+om_pri = [0.3, 0.01]                          # gaussian prior on om => [mean, std]
 w_pri = [-11, 9]                              # flat prior on w
 lowz = True                                   # choose to add lowz sample
 field = 'DDF'                                   # choose field
-v = '0'                                       # realization or version
 biascorr = True
 screen = True
+n_iter = 12000
+warmup = 10000
 
 save_full_fitres = True
 plot_chains = True
@@ -344,7 +349,6 @@ fname_test_zenodo_meta = '/media/RESSPECT/data/PLAsTiCC/PLAsTiCC_zenodo/plasticc
 biascorr_dir = '/media/RESSPECT/data/PLAsTiCC/biascorsims/'
 
 fname_input_salt2mu = '../utils/template_SALT2mu.input'
-fname_output_salt2mu = '../utils/SALT2mu.input'
 
 fname_fitres_lowz = dir_input + 'lowz_only_fittres.fitres'
 
@@ -356,10 +360,10 @@ fname_fitres_lowz = dir_input + 'lowz_only_fittres.fitres'
 #done = ['random3000.csv', 'fiducial3000.csv', '99SNIa1SNIax.csv', 
 #        '98SNIa2SNIax.csv', '95SNIa5SNIax.csv', '90SNIa10SNIax.csv',  '99.9SNIa0.1SNIax.csv']
 
-done = ['random3000.csv', 'fiducial3000.csv', 'perfect3000.csv']
+done = ['90SNIa10SNII.csv']
 
 
-for version in range(10):
+for version in range(5,6):
     
     for nobjs in ['3000']:
         
@@ -383,6 +387,7 @@ for version in range(10):
                 #######################
                 ### Generate fitres ###
                 #######################
+                fname_output_salt2mu = '../utils/SALT2mu_' + sample + '_v' + str(version) + '.input'
 
                 read_fitres(fname_zenodo_meta=fname_test_zenodo_meta,
                             fname_sample=fname_sample,
@@ -432,4 +437,5 @@ for version in range(10):
                 #######################
         
                 fit_stan(fname_fitres_comb=fname_fitres_comb, dir_output=dir_output, sample=sample,
-                         screen=screen, lowz=lowz, bias=biascorr, plot=plot_chains, om_pri=om_pri, w_pri=w_pri)
+                         screen=screen, lowz=lowz, bias=biascorr, plot=plot_chains, om_pri=om_pri, w_pri=w_pri,
+                         n_iter=n_iter, warmup=warmup)
